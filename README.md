@@ -1,2 +1,2 @@
 # chromaFX-software.github.io
-The website for a free Picture Editing Software, Pre Releas Website, Website, Software, Picture Editimg, Free, Website, Pro, Freeware
+ChromaFX is a free picture editing software. The project is currently in pre-release and aims to provide powerful but easy-to-use tools for editing images and creating visual effects.
