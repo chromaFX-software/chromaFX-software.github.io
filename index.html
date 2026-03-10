@@ -1,4 +1,3 @@
---- START OF FILE index.html ---
 <!DOCTYPE html>
 <html lang="de">
 <head>
@@ -31,7 +30,18 @@
             --ease: cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        /* GLOBAL FIX FOR OVERFLOW */
+        * { 
+            margin: 0; 
+            padding: 0; 
+            box-sizing: border-box; 
+        }
+
+        html, body {
+            max-width: 100%;
+            overflow-x: hidden;
+            background: var(--bg);
+        }
         
         @media (hover: hover) and (pointer: fine) {
             * { cursor: none; }
@@ -40,10 +50,8 @@
         html { scroll-behavior: smooth; }
 
         body {
-            background: var(--bg);
             color: var(--text);
             font-family: var(--font);
-            overflow-x: hidden;
             line-height: 1.65;
             -webkit-font-smoothing: antialiased;
         }
@@ -84,7 +92,7 @@
             z-index: 0;
         }
 
-        .container { max-width: 1200px; margin: 0 auto; padding: 0 5%; position: relative; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 5%; position: relative; width: 100%; }
 
         /* NAV */
         nav {
@@ -101,31 +109,32 @@
             border-bottom: 1px solid var(--border);
         }
 
-        .nav-left { display: flex; align-items: center; gap: 1.5rem; }
-        .nav-right { display: flex; align-items: center; gap: 1.5rem; }
+        .nav-left { display: flex; align-items: center; gap: 1rem; }
+        .nav-right { display: flex; align-items: center; gap: 1rem; }
 
         .logo {
             font-weight: 800;
-            font-size: 1.35rem;
+            font-size: 1.25rem;
             letter-spacing: -0.04em;
             color: var(--text);
             text-decoration: none;
             z-index: 501;
+            white-space: nowrap;
         }
         .logo .fx { color: var(--accent); }
 
         .dev-badge {
             font-family: var(--mono);
-            font-size: 0.7rem;
+            font-size: 0.65rem;
             letter-spacing: 0.08em;
-            padding: 4px 12px;
+            padding: 4px 10px;
             border: 1px solid var(--accent);
             color: var(--accent);
             border-radius: 999px;
             text-transform: uppercase;
             display: flex;
             align-items: center;
-            gap: 7px;
+            gap: 6px;
             white-space: nowrap;
         }
         .dev-badge::before {
@@ -138,11 +147,11 @@
         }
         @keyframes blink { 0%,100%{opacity:1;} 50%{opacity:0.3;} }
 
-        .lang-switch { display: flex; gap: 4px; font-family: var(--mono); font-size: 0.78rem; }
-        .lang-opt { color: var(--muted); cursor: pointer; transition: color 0.2s; padding: 2px 5px; }
+        .lang-switch { display: flex; gap: 2px; font-family: var(--mono); font-size: 0.75rem; }
+        .lang-opt { color: var(--muted); cursor: pointer; transition: color 0.2s; padding: 2px 4px; }
         .lang-opt:hover { color: var(--text); }
         .lang-opt.active { color: var(--accent); }
-        .lang-sep { color: var(--border); line-height: 1.8; }
+        .lang-sep { color: var(--border); }
 
         .hamburger {
             display: flex; flex-direction: column; gap: 5px;
@@ -151,7 +160,7 @@
             cursor: pointer;
         }
         .hamburger span {
-            display: block; width: 26px; height: 1.5px;
+            display: block; width: 24px; height: 1.5px;
             background: var(--text); transition: 0.3s var(--ease);
         }
         body.nav-open .hamburger span:nth-child(1) { transform: rotate(45deg) translate(4px, 5px); background: var(--accent); }
@@ -225,7 +234,7 @@
             min-height: 100svh;
             display: flex;
             align-items: center;
-            padding-top: 60px;
+            padding-top: 80px;
             position: relative;
             overflow: hidden;
         }
@@ -258,11 +267,12 @@
         .tag-line::before { content: ''; display: block; width: 28px; height: 1px; background: var(--accent); }
 
         .hero-title {
-            font-size: clamp(2.5rem, 9vw, 7rem);
+            font-size: clamp(2.4rem, 8vw, 7rem);
             font-weight: 800;
             letter-spacing: -0.04em;
             line-height: 1.05;
             margin-bottom: 1.5rem;
+            word-wrap: break-word;
         }
         .hero-title .hl { color: var(--accent); }
 
@@ -318,7 +328,7 @@
             overflow: hidden;
             border-top: 1px solid var(--border);
             border-bottom: 1px solid var(--border);
-            padding: 13px 0; margin: 5rem 0;
+            padding: 13px 0; margin: 4rem 0;
             background: var(--bg-card);
         }
         .marquee-track {
@@ -328,7 +338,8 @@
             color: var(--muted); letter-spacing: 0.08em;
             text-transform: uppercase; white-space: nowrap;
         }
-        .marquee-track .hl { color: var(--accent); }        @keyframes mq { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
+        .marquee-track .hl { color: var(--accent); }
+        @keyframes mq { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
 
         /* SECTION SHARED */
         .section { padding: 5rem 0; }
@@ -451,13 +462,29 @@
         @media (max-width: 600px) {
             .container { padding: 0 6%; }
             .section { padding: 3.5rem 0; }
+            
+            nav { padding: 0.8rem 5%; }
+            .nav-left { gap: 0.7rem; }
+            .logo { font-size: 1.1rem; }
+            .dev-badge { display: none; } /* Versteckt Badge auf kleinen Handys für Platz */
+            
             .feat-grid { grid-template-columns: 1fr; gap: 1px; }
             footer { flex-direction: column; align-items: flex-start; gap: 1.5rem; }
             .footer-r { text-align: left; }
             .rm-item { flex-direction: column; gap: 0.8rem; }
-            .hero-title { font-size: 3rem; }
+            
+            .hero-title { font-size: 2.5rem; }
             .cta-group { flex-direction: column; align-items: stretch; width: 100%; }
             .btn-p, .btn-g, .btn-wa { text-align: center; width: 100%; justify-content: center; }
+
+            .spec-row { flex-direction: column; align-items: flex-start; gap: 5px; padding: 1rem 1.5rem; }
+            .spec-val { font-size: 0.85rem; }
+        }
+        
+        /* FALLBACK FÜR SEHR KLEINE BILDSCHIRME */
+        @media (max-width: 360px) {
+            .logo { font-size: 1rem; }
+            .lang-switch { font-size: 0.7rem; }
         }
     </style>
 </head>
@@ -605,7 +632,6 @@
             <p class="sec-sub" data-i18n="r_sub">Ein ehrlicher Überblick — was funktioniert, was in Arbeit ist und was geplant ist.</p>
         </div>
         <div class="rm-list reveal">
-            <!-- Items 1-12 wie im Original -->
             <div class="rm-item"><div class="rm-status s-done" data-i18n="st_done">Fertig</div><div><div class="rm-label" data-i18n="r1l">RAW-Öffnen & Grundbearbeitung</div><div class="rm-desc" data-i18n="r1d">Helligkeit, Kontrast, Weißpunkt, Schwarzpunkt, Lichter, Tiefen</div></div></div>
             <div class="rm-item"><div class="rm-status s-done" data-i18n="st_done2">Fertig</div><div><div class="rm-label" data-i18n="r2l">Tonwertkurven & Live-Histogramm</div><div class="rm-desc" data-i18n="r2d">Interaktiver Kurveneditor mit getrennten RGB-Kanälen</div></div></div>
             <div class="rm-item"><div class="rm-status s-done" data-i18n="st_done3">Fertig</div><div><div class="rm-label" data-i18n="r3l">Alben, Suche & Farblabels</div><div class="rm-desc" data-i18n="r3d">Galerie-Verwaltung mit Bewertungen und Metadaten-Suche</div></div></div>
