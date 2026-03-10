@@ -1,9 +1,16 @@
+--- START OF FILE index.html ---
 <!DOCTYPE html>
 <html lang="de">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-    <title>chromaFX — Bildbearbeitung neu gedacht</title>
+    <title>chromaFX — Bildbearbeitung neu gedacht | RAW Editor für Windows & Linux</title>
+    
+    <!-- SEO Optimierung -->
+    <meta name="description" content="chromaFX ist ein leistungsstarker, kostenloser RAW-Bildeditor für Windows und Linux. Mit Tonwertkurven, Rauschreduktion und Alben-Verwaltung. Jetzt Entwicklung verfolgen.">
+    <meta name="keywords" content="Bildbearbeitung, RAW Editor, chromaFX, Fotobearbeitung, Freeware, Windows, Linux, Tonwertkurven, Bildverwaltung">
+    <meta name="author" content="Dominik Schrödel">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -15,6 +22,7 @@
             --bg-raised: #1c1c26;
             --accent: #4d8fff;
             --accent2: #7eb5ff;
+            --whatsapp: #25d366; 
             --text: #f0f0f0;
             --muted: #6b6b80;
             --border: rgba(255,255,255,0.07);
@@ -25,7 +33,6 @@
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
-        /* Standard Cursor für Desktop */
         @media (hover: hover) and (pointer: fine) {
             * { cursor: none; }
         }
@@ -41,7 +48,7 @@
             -webkit-font-smoothing: antialiased;
         }
 
-        /* CURSOR (Nur Desktop) */
+        /* CURSOR */
         #cur-dot, #cur-ring {
             position: fixed;
             border-radius: 50%;
@@ -67,7 +74,6 @@
             }
         }
 
-        /* NOISE TEXTURE */
         body::before {
             content: '';
             position: fixed;
@@ -162,18 +168,15 @@
             display: flex; align-items: center; justify-content: center;
             opacity: 0; pointer-events: none;
             transition: opacity 0.4s var(--ease);
-            overflow-y: auto; /* Erlaubt Scrollen im Menü auf sehr kleinen Screens */
+            overflow-y: auto; 
         }
         body.nav-open .menu-overlay { opacity: 1; pointer-events: all; }
 
         .menu-inner { text-align: center; width: 100%; padding: 20px; }
         .menu-list { list-style: none; margin-bottom: 2.5rem; }
-        
-        /* WICHTIG: Erlaubt, dass der Inhalt sichtbar bleibt, auch wenn er umbricht */
         .menu-list li { margin-bottom: 0.4rem; } 
         
         .menu-link {
-            /* FIX: Kleinere Minimalgröße (1.5rem) und Umbruch erlauben */
             font-size: clamp(1.5rem, 7vw, 4.5rem);
             font-weight: 800;
             color: var(--text);
@@ -181,12 +184,10 @@
             text-transform: uppercase;
             letter-spacing: -0.03em;
             display: inline-block;
-            transform: translateY(20px); /* Reduzierte Animation Distanz für smootheren Look */
+            transform: translateY(20px);
             opacity: 0;
             transition: transform 0.5s var(--ease), opacity 0.5s var(--ease), color 0.2s;
             padding: 5px 10px;
-            
-            /* FIX für lange Wörter wie Entwicklungsstand */
             word-break: break-word;
             hyphens: auto;
             line-height: 1.1;
@@ -198,6 +199,7 @@
         body.nav-open .menu-list li:nth-child(2) .menu-link { transition-delay: 0.12s; }
         body.nav-open .menu-list li:nth-child(3) .menu-link { transition-delay: 0.18s; }
         body.nav-open .menu-list li:nth-child(4) .menu-link { transition-delay: 0.24s; }
+        body.nav-open .menu-list li:nth-child(5) .menu-link { transition-delay: 0.30s; color: var(--whatsapp); }
         .menu-link:hover { color: var(--accent); }
 
         .menu-footer {
@@ -296,6 +298,18 @@
             border-radius: 2px;
         }
         .btn-g:hover { border-color: rgba(255,255,255,0.25); color: var(--text); }
+
+        .btn-wa {
+            background: rgba(37, 211, 102, 0.1);
+            color: var(--whatsapp);
+            border: 1px solid rgba(37, 211, 102, 0.3);
+            font-family: var(--mono); font-size: 0.8rem;
+            text-transform: uppercase; letter-spacing: 0.06em;
+            padding: 14px 26px; border-radius: 2px;
+            text-decoration: none; display: inline-flex; align-items: center; gap: 8px;
+            transition: background 0.2s, transform 0.2s;
+        }
+        .btn-wa:hover { background: rgba(37, 211, 102, 0.2); transform: translateY(-2px); }
 
         .hero-note { font-family: var(--mono); font-size: 0.73rem; color: var(--muted); margin-top: 1.5rem; }
 
@@ -412,6 +426,7 @@
         .ct-label { font-family: var(--mono); font-size: 0.73rem; color: var(--accent); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.6rem; }
         .ct-val { font-size: 1.25rem; font-weight: 700; color: var(--text); text-decoration: none; transition: color 0.2s; word-break: break-all; }
         .ct-val:hover { color: var(--accent); }
+        .ct-val.wa { color: var(--whatsapp); }
 
         /* FOOTER */
         footer {
@@ -422,56 +437,27 @@
         .footer-logo .fx { color: var(--accent); }
         .footer-r { font-family: var(--mono); font-size: 0.72rem; color: var(--muted); text-align: right; line-height: 1.9; }
 
-        /* REVEAL ANIMATION */
         .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.75s var(--ease), transform 0.75s var(--ease); }
         .reveal.active { opacity: 1; transform: translateY(0); }
 
-        /* ================= RESPONSIVE ================= */
-        
-        /* TABLET & SMALL LAPTOP */
+        /* RESPONSIVE */
         @media (max-width: 900px) {
             .feat-grid { grid-template-columns: 1fr 1fr; }
             .specs-grid { grid-template-columns: 1fr; }
             .contact-grid { grid-template-columns: 1fr; }
-            
             .hero-glow, .hero-glow2 { opacity: 0.5; }
         }
 
-        /* MOBILE (SMARTPHONE) */
         @media (max-width: 600px) {
             .container { padding: 0 6%; }
             .section { padding: 3.5rem 0; }
-            .marquee-wrap { margin: 3rem 0; }
-            
-            /* Nav adjustments */
-            .nav-left { gap: 1rem; }
-            .nav-right { gap: 1rem; }
-            
-            /* Stack grids to 1 column */
             .feat-grid { grid-template-columns: 1fr; gap: 1px; }
-            
-            /* Footer stack */
             footer { flex-direction: column; align-items: flex-start; gap: 1.5rem; }
             .footer-r { text-align: left; }
-            
-            /* Roadmap items */
-            .rm-item { flex-direction: column; gap: 0.8rem; padding: 1.2rem 0; }
-            .rm-item:hover { padding-left: 0; }
-            
-            /* Hero adjustments */
+            .rm-item { flex-direction: column; gap: 0.8rem; }
             .hero-title { font-size: 3rem; }
             .cta-group { flex-direction: column; align-items: stretch; width: 100%; }
-            .btn-p, .btn-g { text-align: center; width: 100%; }
-            
-            /* Disable hover effects on cards for touch */
-            .feat-card:hover { background: var(--bg-card); }
-            .feat-card:hover::before { transform: scaleX(0); }
-        }
-
-        /* SMALL MOBILE (SE, etc) */
-        @media (max-width: 400px) {
-            .dev-badge { display: none; }
-            .hero-title { font-size: 2.6rem; }
+            .btn-p, .btn-g, .btn-wa { text-align: center; width: 100%; justify-content: center; }
         }
     </style>
 </head>
@@ -488,6 +474,7 @@
             <li><a href="#" class="menu-link" onclick="switchView('features')" data-i18n="m_feat">Features</a></li>
             <li><a href="#" class="menu-link" onclick="switchView('roadmap')" data-i18n="m_road">Entwicklungsstand</a></li>
             <li><a href="#" class="menu-link" onclick="switchView('contact')" data-i18n="m_ct">Kontakt</a></li>
+            <li><a href="https://whatsapp.com/channel/0029Vb7mjkM4o7qO78tl3K16" target="_blank" class="menu-link" data-i18n="m_wa">WhatsApp Kanal</a></li>
         </ul>
         <div class="menu-footer" data-i18n="m_foot">chromaFX · Freeware · Kein Download in der Entwicklungsphase</div>
     </div>
@@ -513,7 +500,6 @@
 
 <!-- ==================== VIEW: HOME ==================== -->
 <div id="view-home">
-
     <section class="hero">
         <div class="hero-glow"></div>
         <div class="hero-glow2"></div>
@@ -530,6 +516,10 @@
                 <div class="cta-group">
                     <a href="#" class="btn-p" onclick="switchView('features')" data-i18n="h_btn1">Features entdecken</a>
                     <a href="#" class="btn-g" onclick="switchView('roadmap')" data-i18n="h_btn2">Entwicklungsstand</a>
+                    <a href="https://whatsapp.com/channel/0029Vb7mjkM4o7qO78tl3K16" target="_blank" class="btn-wa">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.89 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.743-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+                        <span data-i18n="h_btn_wa">WhatsApp Kanal</span>
+                    </a>
                 </div>
                 <p class="hero-note" data-i18n="h_note">Für Windows &amp; Linux · Mac in Entwicklung · Freeware</p>
             </div>
@@ -543,7 +533,6 @@
         </div>
     </div>
 
-    <!-- TEASER FEATURES on home -->
     <section class="section">
         <div class="container">
             <div class="reveal">
@@ -573,8 +562,7 @@
             </div>
         </div>
     </section>
-
-</div><!-- /view-home -->
+</div>
 
 <!-- ==================== VIEW: FEATURES ==================== -->
 <div id="view-features">
@@ -584,93 +572,29 @@
             <h2 class="sec-title" data-i18n="f_title">Volle Kontrolle über<br>jedes Bild.</h2>
             <p class="sec-sub" data-i18n="f_sub">Alle Werkzeuge für professionelle Bildbearbeitung — kompakt und schnell.</p>
         </div>
-
         <div class="feat-grid reveal">
-            <div class="feat-card">
-                <div class="feat-num">01</div>
-                <div class="feat-title" data-i18n="f1t">RAW-Formate öffnen</div>
-                <div class="feat-desc" data-i18n="f1d">Direkte Unterstützung für .CR2, .NEF, .ARW und andere Kamera-RAW-Formate — ohne Vorkonvertierung.</div>
-            </div>
-            <div class="feat-card">
-                <div class="feat-num">02</div>
-                <div class="feat-title" data-i18n="f2t">Tonwertkurven</div>
-                <div class="feat-desc" data-i18n="f2d">Präziser Kurveneditor für Master, Rot, Grün und Blau — interaktiv und in Echtzeit.</div>
-            </div>
-            <div class="feat-card">
-                <div class="feat-num">03</div>
-                <div class="feat-title" data-i18n="f3t">Smarte Rauschreduktion</div>
-                <div class="feat-desc" data-i18n="f3d">Kantenbewusste Rauschreduktion, die Details erhält und nur echtes Bildrauschen entfernt.</div>
-            </div>
-            <div class="feat-card">
-                <div class="feat-num">04</div>
-                <div class="feat-title" data-i18n="f4t">Alben & Galerie</div>
-                <div class="feat-desc" data-i18n="f4d">Bilder in Alben organisieren, mit Farblabels (Rot, Gelb, Grün) und Sternbewertungen versehen.</div>
-            </div>
-            <div class="feat-card">
-                <div class="feat-num">05</div>
-                <div class="feat-title" data-i18n="f5t">Vor/Nachher-Vergleich</div>
-                <div class="feat-desc" data-i18n="f5d">Mehrere Bilder nebeneinander vergleichen — mit synchronisiertem Zoom und Scroll.</div>
-            </div>
-            <div class="feat-card">
-                <div class="feat-num">06</div>
-                <div class="feat-title" data-i18n="f6t">Vignette</div>
-                <div class="feat-desc" data-i18n="f6d">Vignette mit einstellbarer Intensität und Größe für stimmungsvolle Bildränder.</div>
-            </div>
-            <div class="feat-card">
-                <div class="feat-num">07</div>
-                <div class="feat-title" data-i18n="f7t">Live-Histogramm</div>
-                <div class="feat-desc" data-i18n="f7d">Echtzeit-Histogramm für alle Farbkanäle — präzise Belichtungskontrolle auf einen Blick.</div>
-            </div>
-            <div class="feat-card">
-                <div class="feat-num">08</div>
-                <div class="feat-title" data-i18n="f8t">EXIF & Bildsuche</div>
-                <div class="feat-desc" data-i18n="f8d">EXIF-Daten direkt anzeigen: Kamera, Objektiv, Belichtungszeit, ISO. Bilder über Metadaten durchsuchen.</div>
-            </div>
-            <div class="feat-card">
-                <div class="feat-num">09</div>
-                <div class="feat-title" data-i18n="f9t">Flexibler Export</div>
-                <div class="feat-desc" data-i18n="f9d">Als JPEG, PNG oder TIFF speichern — mit einstellbarer Qualität, Schärfung und Farbprofil (sRGB / AdobeRGB).</div>
-            </div>
-            <div class="feat-card">
-                <div class="feat-num">10</div>
-                <div class="feat-title" data-i18n="f10t">Split-Toning</div>
-                <div class="feat-desc" data-i18n="f10d">Lichter und Tiefen unabhängig voneinander einfärben — für kreative Farbstimmungen und Filmlooks.</div>
-            </div>
-            <div class="feat-card">
-                <div class="feat-num">11</div>
-                <div class="feat-title" data-i18n="f11t">Schwarz-Weiß-Konvertierung</div>
-                <div class="feat-desc" data-i18n="f11d">Steuerbarer S/W-Modus mit einstellbaren Kanalgewichten für Rot, Grün und Blau.</div>
-            </div>
-            <div class="feat-card">
-                <div class="feat-num">12</div>
-                <div class="feat-title" data-i18n="f12t">Zuschneiden & Drehen</div>
-                <div class="feat-desc" data-i18n="f12d">Interaktives Zuschneiden mit freiem Seitenverhältnis und freier Rotation — inkl. Drittelsraster.</div>
-            </div>
-            <div class="feat-card">
-                <div class="feat-num">13</div>
-                <div class="feat-title" data-i18n="f13t">Objektivkorrektur</div>
-                <div class="feat-desc" data-i18n="f13d">Automatische Profilkorrektur für Verzeichnung und Vignettierung über integrierte Lensfun-Datenbank.</div>
-            </div>
-            <div class="feat-card">
-                <div class="feat-num">14</div>
-                <div class="feat-title" data-i18n="f14t">Pinsel-Masken</div>
-                <div class="feat-desc" data-i18n="f14d">Lokale Korrekturen mit frei gemalten Masken — gezielt nur die Bereiche bearbeiten, die du willst.</div>
-            </div>
-            <div class="feat-card">
-                <div class="feat-num">15</div>
-                <div class="feat-title" data-i18n="f15t">Sättigung & Vibrance</div>
-                <div class="feat-desc" data-i18n="f15d">Separate Regler für Sättigung und Vibrance sowie individuelle Verstärkung für Grün- und Blautöne.</div>
-            </div>
+            <div class="feat-card"><div class="feat-num">01</div><div class="feat-title" data-i18n="f1t">RAW-Formate öffnen</div><div class="feat-desc" data-i18n="f1d">Direkte Unterstützung für .CR2, .NEF, .ARW und andere Kamera-RAW-Formate — ohne Vorkonvertierung.</div></div>
+            <div class="feat-card"><div class="feat-num">02</div><div class="feat-title" data-i18n="f2t">Tonwertkurven</div><div class="feat-desc" data-i18n="f2d">Präziser Kurveneditor für Master, Rot, Grün und Blau — interaktiv und in Echtzeit.</div></div>
+            <div class="feat-card"><div class="feat-num">03</div><div class="feat-title" data-i18n="f3t">Smarte Rauschreduktion</div><div class="feat-desc" data-i18n="f3d">Kantenbewusste Rauschreduktion, die Details erhält und nur echtes Bildrauschen entfernt.</div></div>
+            <div class="feat-card"><div class="feat-num">04</div><div class="feat-title" data-i18n="f4t">Alben & Galerie</div><div class="feat-desc" data-i18n="f4d">Bilder in Alben organisieren, mit Farblabels (Rot, Gelb, Grün) und Sternbewertungen versehen.</div></div>
+            <div class="feat-card"><div class="feat-num">05</div><div class="feat-title" data-i18n="f5t">Vor/Nachher-Vergleich</div><div class="feat-desc" data-i18n="f5d">Mehrere Bilder nebeneinander vergleichen — mit synchronisiertem Zoom und Scroll.</div></div>
+            <div class="feat-card"><div class="feat-num">06</div><div class="feat-title" data-i18n="f6t">Vignette</div><div class="feat-desc" data-i18n="f6d">Vignette mit einstellbarer Intensität und Größe für stimmungsvolle Bildränder.</div></div>
+            <div class="feat-card"><div class="feat-num">07</div><div class="feat-title" data-i18n="f7t">Live-Histogramm</div><div class="feat-desc" data-i18n="f7d">Echtzeit-Histogramm für alle Farbkanäle — präzise Belichtungskontrolle auf einen Blick.</div></div>
+            <div class="feat-card"><div class="feat-num">08</div><div class="feat-title" data-i18n="f8t">EXIF & Bildsuche</div><div class="feat-desc" data-i18n="f8d">EXIF-Daten direkt anzeigen: Kamera, Objektiv, Belichtungszeit, ISO. Bilder über Metadaten durchsuchen.</div></div>
+            <div class="feat-card"><div class="feat-num">09</div><div class="feat-title" data-i18n="f9t">Flexibler Export</div><div class="feat-desc" data-i18n="f9d">Als JPEG, PNG oder TIFF speichern — mit einstellbarer Qualität, Schärfung und Farbprofil (sRGB / AdobeRGB).</div></div>
+            <div class="feat-card"><div class="feat-num">10</div><div class="feat-title" data-i18n="f10t">Split-Toning</div><div class="feat-desc" data-i18n="f10d">Lichter und Tiefen unabhängig voneinander einfärben — für kreative Farbstimmungen und Filmlooks.</div></div>
+            <div class="feat-card"><div class="feat-num">11</div><div class="feat-title" data-i18n="f11t">Schwarz-Weiß-Konvertierung</div><div class="feat-desc" data-i18n="f11d">Steuerbarer S/W-Modus mit einstellbaren Kanalgewichten für Rot, Grün und Blau.</div></div>
+            <div class="feat-card"><div class="feat-num">12</div><div class="feat-title" data-i18n="f12t">Zuschneiden & Drehen</div><div class="feat-desc" data-i18n="f12d">Interaktives Zuschneiden mit freiem Seitenverhältnis und freier Rotation — inkl. Drittelsraster.</div></div>
+            <div class="feat-card"><div class="feat-num">13</div><div class="feat-title" data-i18n="f13t">Objektivkorrektur</div><div class="feat-desc" data-i18n="f13d">Automatische Profilkorrektur für Verzeichnung und Vignettierung über integrierte Lensfun-Datenbank.</div></div>
+            <div class="feat-card"><div class="feat-num">14</div><div class="feat-title" data-i18n="f14t">Pinsel-Masken</div><div class="feat-desc" data-i18n="f14d">Lokale Korrekturen mit frei gemalten Masken — gezielt nur die Bereiche bearbeiten, die du willst.</div></div>
+            <div class="feat-card"><div class="feat-num">15</div><div class="feat-title" data-i18n="f15t">Sättigung & Vibrance</div><div class="feat-desc" data-i18n="f15d">Separate Regler für Sättigung und Vibrance sowie individuelle Verstärkung für Grün- und Blautöne.</div></div>
         </div>
-
         <div class="dev-notice reveal">
             <div class="dev-notice-bar"></div>
-            <div class="dev-notice-text" data-i18n="dev_note">
-                <strong>Aktiv in Entwicklung:</strong> chromaFX befindet sich im Aufbau. Einige Features — z. B. der Verlaufsfilter — sind implementiert, aber noch nicht vollständig stabil. Das Programm wird kontinuierlich weiterentwickelt. Mac-Unterstützung ist in Planung.
-            </div>
+            <div class="dev-notice-text" data-i18n="dev_note"><strong>Aktiv in Entwicklung:</strong> chromaFX befindet sich im Aufbau. Einige Features — z. B. der Verlaufsfilter — sind implementiert, aber noch nicht vollständig stabil. Das Programm wird kontinuierlich weiterentwickelt. Mac-Unterstützung ist in Planung.</div>
         </div>
     </div>
-</div><!-- /view-features -->
+</div>
 
 <!-- ==================== VIEW: ROADMAP ==================== -->
 <div id="view-roadmap">
@@ -680,88 +604,33 @@
             <h2 class="sec-title" data-i18n="r_title">Was schon steht.<br>Was noch kommt.</h2>
             <p class="sec-sub" data-i18n="r_sub">Ein ehrlicher Überblick — was funktioniert, was in Arbeit ist und was geplant ist.</p>
         </div>
-
         <div class="rm-list reveal">
-            <div class="rm-item">
-                <div class="rm-status s-done" data-i18n="st_done">Fertig</div>
-                <div><div class="rm-label" data-i18n="r1l">RAW-Öffnen & Grundbearbeitung</div><div class="rm-desc" data-i18n="r1d">Helligkeit, Kontrast, Weißpunkt, Schwarzpunkt, Lichter, Tiefen</div></div>
-            </div>
-            <div class="rm-item">
-                <div class="rm-status s-done" data-i18n="st_done2">Fertig</div>
-                <div><div class="rm-label" data-i18n="r2l">Tonwertkurven & Live-Histogramm</div><div class="rm-desc" data-i18n="r2d">Interaktiver Kurveneditor mit getrennten RGB-Kanälen</div></div>
-            </div>
-            <div class="rm-item">
-                <div class="rm-status s-done" data-i18n="st_done3">Fertig</div>
-                <div><div class="rm-label" data-i18n="r3l">Alben, Suche & Farblabels</div><div class="rm-desc" data-i18n="r3d">Galerie-Verwaltung mit Bewertungen und Metadaten-Suche</div></div>
-            </div>
-            <div class="rm-item">
-                <div class="rm-status s-done" data-i18n="st_done4">Fertig</div>
-                <div><div class="rm-label" data-i18n="r4l">Rauschreduktion & Schärfe</div><div class="rm-desc" data-i18n="r4d">Kantenbewusste Rauschreduktion und Unsharp-Mask-Schärfung</div></div>
-            </div>
-            <div class="rm-item">
-                <div class="rm-status s-done" data-i18n="st_done5">Fertig</div>
-                <div><div class="rm-label" data-i18n="r5l">Split-Toning & S/W-Konvertierung</div><div class="rm-desc" data-i18n="r5d">Lichter/Tiefen-Tönung und steuerbarer Schwarz-Weiß-Modus</div></div>
-            </div>
-            <div class="rm-item">
-                <div class="rm-status s-done" data-i18n="st_done6">Fertig</div>
-                <div><div class="rm-label" data-i18n="r6l">Zuschneiden & Drehen</div><div class="rm-desc" data-i18n="r6d">Freies Zuschneiden mit Drittelsraster und Freirotation</div></div>
-            </div>
-            <div class="rm-item">
-                <div class="rm-status s-done" data-i18n="st_done7">Fertig</div>
-                <div><div class="rm-label" data-i18n="r7l">Objektivkorrektur-Profile</div><div class="rm-desc" data-i18n="r7d">Automatische Korrektur über Lensfun-Datenbank</div></div>
-            </div>
-            <div class="rm-item">
-                <div class="rm-status s-done" data-i18n="st_done8">Fertig</div>
-                <div><div class="rm-label" data-i18n="r8l">Pinsel-Masken</div><div class="rm-desc" data-i18n="r8d">Lokale Korrekturen mit frei gemalten Masken</div></div>
-            </div>
-            <div class="rm-item">
-                <div class="rm-status s-done" data-i18n="st_done9">Fertig</div>
-                <div><div class="rm-label" data-i18n="r9l">Export mit Farbprofil</div><div class="rm-desc" data-i18n="r9d">JPEG / PNG / TIFF mit sRGB oder AdobeRGB, Schärfung beim Export</div></div>
-            </div>
-            <div class="rm-item">
-                <div class="rm-status s-done" data-i18n="st_done10">Fertig</div>
-                <div><div class="rm-label" data-i18n="r10l">Performance & Stabilität</div><div class="rm-desc" data-i18n="r10d">Schnelle Ladezeiten, Speicherverwaltung, Fehlerbehandlung</div></div>
-            </div>
-            <div class="rm-item">
-                <div class="rm-status s-wip" data-i18n="st_wip">In Arbeit</div>
-                <div><div class="rm-label" data-i18n="r11l">Verlaufsfilter</div><div class="rm-desc" data-i18n="r11d">Gerichtete Belichtungsanpassung — implementiert, noch nicht stabil</div></div>
-            </div>
-            <div class="rm-item">
-                <div class="rm-status s-plan" data-i18n="st_plan">Geplant</div>
-                <div><div class="rm-label" data-i18n="r12l">Mac-Unterstützung</div><div class="rm-desc" data-i18n="r12d">macOS-Kompatibilität ist in Planung</div></div>
-            </div>
+            <!-- Items 1-12 wie im Original -->
+            <div class="rm-item"><div class="rm-status s-done" data-i18n="st_done">Fertig</div><div><div class="rm-label" data-i18n="r1l">RAW-Öffnen & Grundbearbeitung</div><div class="rm-desc" data-i18n="r1d">Helligkeit, Kontrast, Weißpunkt, Schwarzpunkt, Lichter, Tiefen</div></div></div>
+            <div class="rm-item"><div class="rm-status s-done" data-i18n="st_done2">Fertig</div><div><div class="rm-label" data-i18n="r2l">Tonwertkurven & Live-Histogramm</div><div class="rm-desc" data-i18n="r2d">Interaktiver Kurveneditor mit getrennten RGB-Kanälen</div></div></div>
+            <div class="rm-item"><div class="rm-status s-done" data-i18n="st_done3">Fertig</div><div><div class="rm-label" data-i18n="r3l">Alben, Suche & Farblabels</div><div class="rm-desc" data-i18n="r3d">Galerie-Verwaltung mit Bewertungen und Metadaten-Suche</div></div></div>
+            <div class="rm-item"><div class="rm-status s-done" data-i18n="st_done4">Fertig</div><div><div class="rm-label" data-i18n="r4l">Rauschreduktion & Schärfe</div><div class="rm-desc" data-i18n="r4d">Kantenbewusste Rauschreduktion und Unsharp-Mask-Schärfung</div></div></div>
+            <div class="rm-item"><div class="rm-status s-done" data-i18n="st_done5">Fertig</div><div><div class="rm-label" data-i18n="r5l">Split-Toning & S/W-Konvertierung</div><div class="rm-desc" data-i18n="r5d">Lichter/Tiefen-Tönung und steuerbarer Schwarz-Weiß-Modus</div></div></div>
+            <div class="rm-item"><div class="rm-status s-done" data-i18n="st_done6">Fertig</div><div><div class="rm-label" data-i18n="r6l">Zuschneiden & Drehen</div><div class="rm-desc" data-i18n="r6d">Freies Zuschneiden mit Drittelsraster und Freirotation</div></div></div>
+            <div class="rm-item"><div class="rm-status s-done" data-i18n="st_done7">Fertig</div><div><div class="rm-label" data-i18n="r7l">Objektivkorrektur-Profile</div><div class="rm-desc" data-i18n="r7d">Automatische Korrektur über Lensfun-Datenbank</div></div></div>
+            <div class="rm-item"><div class="rm-status s-done" data-i18n="st_done8">Fertig</div><div><div class="rm-label" data-i18n="r8l">Pinsel-Masken</div><div class="rm-desc" data-i18n="r8d">Lokale Korrekturen mit frei gemalten Masken</div></div></div>
+            <div class="rm-item"><div class="rm-status s-done" data-i18n="st_done9">Fertig</div><div><div class="rm-label" data-i18n="r9l">Export mit Farbprofil</div><div class="rm-desc" data-i18n="r9d">JPEG / PNG / TIFF mit sRGB oder AdobeRGB, Schärfung beim Export</div></div></div>
+            <div class="rm-item"><div class="rm-status s-done" data-i18n="st_done10">Fertig</div><div><div class="rm-label" data-i18n="r10l">Performance & Stabilität</div><div class="rm-desc" data-i18n="r10d">Schnelle Ladezeiten, Speicherverwaltung, Fehlerbehandlung</div></div></div>
+            <div class="rm-item"><div class="rm-status s-wip" data-i18n="st_wip">In Arbeit</div><div><div class="rm-label" data-i18n="r11l">Verlaufsfilter</div><div class="rm-desc" data-i18n="r11d">Gerichtete Belichtungsanpassung — implementiert, noch nicht stabil</div></div></div>
+            <div class="rm-item"><div class="rm-status s-plan" data-i18n="st_plan">Geplant</div><div><div class="rm-label" data-i18n="r12l">Mac-Unterstützung</div><div class="rm-desc" data-i18n="r12d">macOS-Kompatibilität ist in Planung</div></div></div>
         </div>
-
         <div style="margin-top: 3rem;" class="reveal">
             <div class="specs-grid">
-                <div class="spec-row">
-                    <span class="spec-key" data-i18n="sp1k">Betriebssystem</span>
-                    <span class="spec-val" data-i18n="sp1v">Windows / Linux</span>
-                </div>
-                <div class="spec-row">
-                    <span class="spec-key" data-i18n="sp2k">RAM</span>
-                    <span class="spec-val">Min. 4 GB &nbsp;<span style="color:var(--muted);font-weight:400;font-size:0.82rem;" data-i18n="sp2r">/ Empf. 8 GB+</span></span>
-                </div>
-                <div class="spec-row">
-                    <span class="spec-key" data-i18n="sp3k">Prozessor</span>
-                    <span class="spec-val">Multicore (AVX2)</span>
-                </div>
-                <div class="spec-row">
-                    <span class="spec-key" data-i18n="sp4k">Lizenz</span>
-                    <span class="spec-val a" data-i18n="sp4v">Freeware</span>
-                </div>
-                <div class="spec-row">
-                    <span class="spec-key" data-i18n="sp5k">Farbtiefe</span>
-                    <span class="spec-val">32-Bit intern</span>
-                </div>
-                <div class="spec-row">
-                    <span class="spec-key" data-i18n="sp6k">Status</span>
-                    <span class="spec-val o" data-i18n="sp6v">In Entwicklung</span>
-                </div>
+                <div class="spec-row"><span class="spec-key" data-i18n="sp1k">Betriebssystem</span><span class="spec-val" data-i18n="sp1v">Windows / Linux</span></div>
+                <div class="spec-row"><span class="spec-key" data-i18n="sp2k">RAM</span><span class="spec-val">Min. 4 GB &nbsp;<span style="color:var(--muted);font-weight:400;font-size:0.82rem;" data-i18n="sp2r">/ Empf. 8 GB+</span></span></div>
+                <div class="spec-row"><span class="spec-key" data-i18n="sp3k">Prozessor</span><span class="spec-val">Multicore (AVX2)</span></div>
+                <div class="spec-row"><span class="spec-key" data-i18n="sp4k">Lizenz</span><span class="spec-val a" data-i18n="sp4v">Freeware</span></div>
+                <div class="spec-row"><span class="spec-key" data-i18n="sp5k">Farbtiefe</span><span class="spec-val">32-Bit intern</span></div>
+                <div class="spec-row"><span class="spec-key" data-i18n="sp6k">Status</span><span class="spec-val o" data-i18n="sp6v">In Entwicklung</span></div>
             </div>
         </div>
     </div>
-</div><!-- /view-roadmap -->
+</div>
 
 <!-- ==================== VIEW: CONTACT ==================== -->
 <div id="view-contact">
@@ -779,13 +648,17 @@
                     </div>
                     <div class="ct-item">
                         <div class="ct-label" data-i18n="ct_loc">Standort</div>
-                        <div class="ct-val">Deutschland</div>
+                        <div class="ct-val" data-i18n="ct_locv">Deutschland</div>
+                    </div>
+                    <div class="ct-item">
+                        <div class="ct-label" data-i18n="ct_mail">E-Mail</div>
+                        <a class="ct-val" href="mailto:chromaFX@mail.de">chromaFX@mail.de</a>
                     </div>
                 </div>
                 <div>
                     <div class="ct-item">
-                        <div class="ct-label" data-i18n="ct_mail">E-Mail</div>
-                        <a class="ct-val" href="mailto:chromaFX@mail.de">chromaFX@mail.de</a>
+                        <div class="ct-label" data-i18n="ct_wa_label">Community</div>
+                        <a class="ct-val wa" href="https://whatsapp.com/channel/0029Vb7mjkM4o7qO78tl3K16" target="_blank" data-i18n="ct_wa_val">WhatsApp Kanal beitreten</a>
                     </div>
                     <div class="ct-item">
                         <div class="ct-label" data-i18n="ct_proj">Projekt</div>
@@ -799,7 +672,7 @@
             </div>
         </div>
     </div>
-</div><!-- /view-contact -->
+</div>
 
 <!-- FOOTER -->
 <footer>
@@ -811,17 +684,13 @@
 </footer>
 
 <script>
-    // ── CURSOR (ONLY ENABLE IF MEDIA QUERY MATCHES IN CSS) ──
     const dot = document.getElementById('cur-dot');
     const ring = document.getElementById('cur-ring');
-    
-    // Check if cursor is visible (desktop)
     const isDesktop = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
 
     if (isDesktop) {
         window.addEventListener('mousemove', e => {
-            dot.style.left = e.clientX + 'px';
-            dot.style.top  = e.clientY + 'px';
+            dot.style.left = e.clientX + 'px'; dot.style.top  = e.clientY + 'px';
             ring.animate({ left: e.clientX + 'px', top: e.clientY + 'px' }, { duration: 400, fill: 'forwards' });
         });
         document.body.addEventListener('mouseover', e => {
@@ -829,150 +698,137 @@
         });
     }
 
-    // ── MENU ──
     function toggleMenu() { document.body.classList.toggle('nav-open'); }
 
-    // ── VIEW SWITCHER ──
-    const views = ['home', 'features', 'roadmap', 'contact'];
     function switchView(v) {
         document.body.classList.remove('nav-open');
-        views.forEach(n => {
+        ['home', 'features', 'roadmap', 'contact'].forEach(n => {
             document.getElementById('view-' + n).style.display = (n === v) ? 'block' : 'none';
         });
         window.scrollTo({ top: 0, behavior: 'smooth' });
-        // Re-trigger reveal for newly shown view
         setTimeout(() => {
             document.querySelectorAll('#view-' + v + ' .reveal:not(.active)').forEach(el => {
-                const rect = el.getBoundingClientRect();
-                if (rect.top < window.innerHeight) el.classList.add('active');
+                const rect = el.getBoundingClientRect(); if (rect.top < window.innerHeight) el.classList.add('active');
             });
-            revealObs.disconnect();
-            document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+            revealObs.disconnect(); document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
         }, 80);
     }
 
-    // ── SCROLL REVEAL ──
     const revealObs = new IntersectionObserver(entries => {
         entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('active'); });
     }, { threshold: 0.08 });
     document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
 
-    // ── TRANSLATIONS ──
     const T = {
         de: {
-            badge:'In Entwicklung', m_home:'Startseite', m_feat:'Features', m_road:'Entwicklungsstand', m_ct:'Kontakt',
+            badge:'In Entwicklung', m_home:'Startseite', m_feat:'Features', m_road:'Entwicklungsstand', m_ct:'Kontakt', m_wa:'WhatsApp Kanal',
             m_foot:'chromaFX · Freeware · Kein Download in der Entwicklungsphase',
-            h_tag:'chromaFX — Frühe Entwicklungsphase',
-            h_t1:'Bilder bearbeiten.', h_t2:'Wie du willst.',
+            h_tag:'chromaFX — Frühe Entwicklungsphase', h_t1:'Bilder bearbeiten.', h_t2:'Wie du willst.',
             h_sub:'chromaFX ist ein leistungsstarker RAW-Bildeditor mit Tonwertkurven, Rauschreduktion, Alben-Verwaltung, Vor/Nachher-Vergleich und vielem mehr — aktuell im Aufbau.',
-            h_btn1:'Features entdecken', h_btn2:'Entwicklungsstand',
-            h_note:'Für Windows & Linux · Mac in Entwicklung · Freeware',
+            h_btn1:'Features entdecken', h_btn2:'Entwicklungsstand', h_btn_wa:'WhatsApp Kanal', h_note:'Für Windows & Linux · Mac in Entwicklung · Freeware',
             ht_label:'Was chromaFX kann', ht_title:'Volle Kontrolle.<br>Kein Kompromiss.', ht_sub:'Von RAW öffnen bis zum fertigen Export — alles in einem Programm.',
             ht_f1t:'RAW-Formate öffnen', ht_f1d:'Direkte Unterstützung für .CR2, .NEF, .ARW und weitere Kamera-RAW-Formate.',
             ht_f2t:'Tonwertkurven', ht_f2d:'Interaktiver Kurveneditor für alle Kanäle: Master, Rot, Grün und Blau.',
             ht_f3t:'Alben & Galerie', ht_f3d:'Bilder in Alben organisieren, mit Farblabels, Bewertungen und Suchfunktion.',
             ht_more:'Alle Features ansehen',
             f_label:'Features', f_title:'Volle Kontrolle über<br>jedes Bild.', f_sub:'Alle Werkzeuge für professionelle Bildbearbeitung — kompakt und schnell.',
-            f1t:'RAW-Formate öffnen', f1d:'Direkte Unterstützung für .CR2, .NEF, .ARW und andere Kamera-RAW-Formate — ohne Vorkonvertierung.',
+            f1t:'RAW-Formate öffnen', f1d:'Direkte Unterstützung für .CR2, .NEF, .ARW und andere Kamera-RAW-Formate.',
             f2t:'Tonwertkurven', f2d:'Präziser Kurveneditor für Master, Rot, Grün und Blau — interaktiv und in Echtzeit.',
-            f3t:'Smarte Rauschreduktion', f3d:'Kantenbewusste Rauschreduktion, die Details erhält und nur echtes Bildrauschen entfernt.',
-            f4t:'Alben & Galerie', f4d:'Bilder in Alben organisieren, mit Farblabels (Rot, Gelb, Grün) und Sternbewertungen versehen.',
-            f5t:'Vor/Nachher-Vergleich', f5d:'Mehrere Bilder nebeneinander vergleichen — mit synchronisiertem Zoom und Scroll.',
-            f6t:'Vignette', f6d:'Vignette mit einstellbarer Intensität und Größe für stimmungsvolle Bildränder.',
-            f7t:'Live-Histogramm', f7d:'Echtzeit-Histogramm für alle Farbkanäle — präzise Belichtungskontrolle auf einen Blick.',
-            f8t:'EXIF & Bildsuche', f8d:'EXIF-Daten direkt anzeigen: Kamera, Objektiv, Belichtungszeit, ISO. Bilder über Metadaten durchsuchen.',
-            f9t:'Flexibler Export', f9d:'Als JPEG, PNG oder TIFF speichern — mit einstellbarer Qualität, Schärfung und Farbprofil (sRGB / AdobeRGB).',
-            f10t:'Split-Toning', f10d:'Lichter und Tiefen unabhängig voneinander einfärben — für kreative Farbstimmungen und Filmlooks.',
-            f11t:'Schwarz-Weiß-Konvertierung', f11d:'Steuerbarer S/W-Modus mit einstellbaren Kanalgewichten für Rot, Grün und Blau.',
-            f12t:'Zuschneiden & Drehen', f12d:'Interaktives Zuschneiden mit freiem Seitenverhältnis und Rotation — inkl. Drittelsraster.',
-            f13t:'Objektivkorrektur', f13d:'Automatische Profilkorrektur für Verzeichnung und Vignettierung über integrierte Lensfun-Datenbank.',
-            f14t:'Pinsel-Masken', f14d:'Lokale Korrekturen mit frei gemalten Masken — gezielt nur die Bereiche bearbeiten, die du willst.',
-            f15t:'Sättigung & Vibrance', f15d:'Separate Regler für Sättigung und Vibrance sowie individuelle Verstärkung für Grün- und Blautöne.',
-            dev_note:'<strong>Aktiv in Entwicklung:</strong> chromaFX befindet sich im Aufbau. Einige Features — z. B. der Verlaufsfilter — sind implementiert, aber noch nicht vollständig stabil. Das Programm wird kontinuierlich weiterentwickelt. Mac-Unterstützung ist in Planung.',
-            r_label:'Entwicklungsstand', r_title:'Was schon steht.<br>Was noch kommt.', r_sub:'Ein ehrlicher Überblick — was funktioniert, was in Arbeit ist und was geplant ist.',
+            f3t:'Smarte Rauschreduktion', f3d:'Kantenbewusste Rauschreduktion, die Details erhält.',
+            f4t:'Alben & Galerie', f4d:'Bilder in Alben organisieren, mit Farblabels und Sternen.',
+            f5t:'Vor/Nachher-Vergleich', f5d:'Mehrere Bilder nebeneinander vergleichen.',
+            f6t:'Vignette', f6d:'Vignette mit einstellbarer Intensität und Größe.',
+            f7t:'Live-Histogramm', f7d:'Echtzeit-Histogramm für alle Farbkanäle.',
+            f8t:'EXIF & Bildsuche', f8d:'EXIF-Daten direkt anzeigen und durchsuchen.',
+            f9t:'Flexibler Export', f9d:'Als JPEG, PNG oder TIFF speichern.',
+            f10t:'Split-Toning', f10d:'Lichter und Tiefen unabhängig voneinander einfärben.',
+            f11t:'Schwarz-Weiß-Konvertierung', f11d:'Steuerbarer S/W-Modus mit Kanalgewichten.',
+            f12t:'Zuschneiden & Drehen', f12d:'Interaktives Zuschneiden und Freirotation.',
+            f13t:'Objektivkorrektur', f13d:'Automatische Profilkorrektur über Lensfun.',
+            f14t:'Pinsel-Masken', f14d:'Lokale Korrekturen mit frei gemalten Masken.',
+            f15t:'Sättigung & Vibrance', f15d:'Regler für Sättigung, Vibrance und Farbprioritäten.',
+            dev_note:'<strong>Aktiv in Entwicklung:</strong> chromaFX befindet sich im Aufbau. Einige Features sind implementiert, aber noch nicht vollständig stabil.',
+            r_label:'Entwicklungsstand', r_title:'Was schon steht.<br>Was noch kommt.', r_sub:'Ein ehrlicher Überblick.',
             st_done:'Fertig', st_done2:'Fertig', st_done3:'Fertig', st_done4:'Fertig', st_done5:'Fertig', st_done6:'Fertig', st_done7:'Fertig', st_done8:'Fertig', st_done9:'Fertig', st_done10:'Fertig',
             st_wip:'In Arbeit', st_plan:'Geplant',
-            r1l:'RAW-Öffnen & Grundbearbeitung', r1d:'Helligkeit, Kontrast, Weißpunkt, Schwarzpunkt, Lichter, Tiefen',
-            r2l:'Tonwertkurven & Live-Histogramm', r2d:'Interaktiver Kurveneditor mit getrennten RGB-Kanälen',
-            r3l:'Alben, Suche & Farblabels', r3d:'Galerie-Verwaltung mit Bewertungen und Metadaten-Suche',
-            r4l:'Rauschreduktion & Schärfe', r4d:'Kantenbewusste Rauschreduktion und Unsharp-Mask-Schärfung',
-            r5l:'Split-Toning & S/W-Konvertierung', r5d:'Lichter/Tiefen-Tönung und steuerbarer Schwarz-Weiß-Modus',
-            r6l:'Zuschneiden & Drehen', r6d:'Freies Zuschneiden mit Drittelsraster und Freirotation',
-            r7l:'Objektivkorrektur-Profile', r7d:'Automatische Korrektur über Lensfun-Datenbank',
-            r8l:'Pinsel-Masken', r8d:'Lokale Korrekturen mit frei gemalten Masken',
-            r9l:'Export mit Farbprofil', r9d:'JPEG / PNG / TIFF mit sRGB oder AdobeRGB, Schärfung beim Export',
-            r10l:'Performance & Stabilität', r10d:'Schnelle Ladezeiten, Speicherverwaltung, Fehlerbehandlung',
-            r11l:'Verlaufsfilter', r11d:'Gerichtete Belichtungsanpassung — implementiert, noch nicht stabil',
-            r12l:'Mac-Unterstützung', r12d:'macOS-Kompatibilität ist in Planung',
+            r1l:'RAW-Öffnen & Grundbearbeitung', r1d:'Helligkeit, Kontrast, Weißpunkt, etc.',
+            r2l:'Tonwertkurven & Live-Histogramm', r2d:'Interaktiver Kurveneditor.',
+            r3l:'Alben, Suche & Farblabels', r3d:'Galerie-Verwaltung.',
+            r4l:'Rauschreduktion & Schärfe', r4d:'Kantenbewusste Reduktion.',
+            r5l:'Split-Toning & S/W-Konvertierung', r5d:'Kreative Farbstimmungen.',
+            r6l:'Zuschneiden & Drehen', r6d:'Zuschneiden mit Drittelsraster.',
+            r7l:'Objektivkorrektur-Profile', r7d:'Lensfun-Datenbank.',
+            r8l:'Pinsel-Masken', r8d:'Lokale Masken-Korrektur.',
+            r9l:'Export mit Farbprofil', r9d:'JPEG/PNG/TIFF Export.',
+            r10l:'Performance & Stabilität', r10d:'Schnelligkeit & Speicher.',
+            r11l:'Verlaufsfilter', r11d:'Gerichtete Anpassungen.',
+            r12l:'Mac-Unterstützung', r12d:'macOS-Planung.',
             sp1k:'Betriebssystem', sp1v:'Windows / Linux', sp2k:'RAM', sp2r:'/ Empf. 8 GB+', sp3k:'Prozessor',
             sp4k:'Lizenz', sp4v:'Freeware', sp5k:'Farbtiefe', sp6k:'Status', sp6v:'In Entwicklung',
             ct_label:'Kontakt', ct_title:'Feedback<br>ist willkommen.',
-            ct_sub:'chromaFX ist ein Einzelprojekt. Wenn du Bugs findest, Ideen hast oder einfach Hallo sagen möchtest — schreib gerne.',
-            ct_dev:'Entwickler', ct_loc:'Standort', ct_mail:'E-Mail', ct_proj:'Projekt', ct_lic:'Lizenz', ct_licv:'Freeware',
+            ct_sub:'chromaFX ist ein Einzelprojekt.',
+            ct_dev:'Entwickler', ct_mail:'E-Mail', ct_loc:'Standort', ct_locv:'Deutschland', ct_wa_label:'Community', ct_wa_val:'WhatsApp Kanal beitreten',
+            ct_proj:'Projekt', ct_lic:'Lizenz', ct_licv:'Freeware',
             f_rights:'Alle Rechte vorbehalten.', f_note:'Freeware · Kein Download in der Entwicklungsphase.'
         },
         en: {
-            badge:'In Development', m_home:'Home', m_feat:'Features', m_road:'Dev Status', m_ct:'Contact',
-            m_foot:'chromaFX · Freeware · No download during development phase',
-            h_tag:'chromaFX — Early Development Stage',
-            h_t1:'Edit images.', h_t2:'Your way.',
-            h_sub:'chromaFX is a powerful RAW image editor with tone curves, noise reduction, album management, before/after comparison and much more — currently under construction.',
-            h_btn1:'Explore Features', h_btn2:'Dev Status',
-            h_note:'For Windows & Linux · Mac in development · Freeware',
-            ht_label:'What chromaFX does', ht_title:'Full control.<br>No compromises.', ht_sub:'From opening RAW to finished export — everything in one program.',
-            ht_f1t:'Open RAW Formats', ht_f1d:'Direct support for .CR2, .NEF, .ARW and other camera RAW formats.',
-            ht_f2t:'Tone Curves', ht_f2d:'Interactive curve editor for all channels: Master, Red, Green and Blue.',
-            ht_f3t:'Albums & Gallery', ht_f3d:'Organize images into albums with color labels, ratings and search.',
+            badge:'In Development', m_home:'Home', m_feat:'Features', m_road:'Dev Status', m_ct:'Contact', m_wa:'WhatsApp Channel',
+            m_foot:'chromaFX · Freeware · No download during development',
+            h_tag:'chromaFX — Early Development Stage', h_t1:'Edit images.', h_t2:'Your way.',
+            h_sub:'chromaFX is a powerful RAW image editor with tone curves, noise reduction, and more.',
+            h_btn1:'Explore Features', h_btn2:'Dev Status', h_btn_wa:'WhatsApp Channel', h_note:'For Windows & Linux · Mac in development · Freeware',
+            ht_label:'What chromaFX does', ht_title:'Full control.<br>No compromises.', ht_sub:'From opening RAW to finished export.',
+            ht_f1t:'Open RAW Formats', ht_f1d:'Direct support for .CR2, .NEF, .ARW etc.',
+            ht_f2t:'Tone Curves', ht_f2d:'Master, Red, Green and Blue channels.',
+            ht_f3t:'Albums & Gallery', ht_f3d:'Organize with labels & ratings.',
             ht_more:'View all features',
-            f_label:'Features', f_title:'Full control over<br>every image.', f_sub:'All tools for professional photo editing — compact and fast.',
-            f1t:'Open RAW Formats', f1d:'Direct support for .CR2, .NEF, .ARW and other camera RAW formats — no prior conversion needed.',
-            f2t:'Tone Curves', f2d:'Precise curve editor for Master, Red, Green and Blue — interactive and in real time.',
-            f3t:'Smart Noise Reduction', f3d:'Edge-aware noise reduction that preserves detail and removes only real image noise.',
-            f4t:'Albums & Gallery', f4d:'Organize images into albums with color labels (red, yellow, green) and star ratings.',
-            f5t:'Before/After Comparison', f5d:'Compare multiple images side by side — with synchronized zoom and scroll.',
-            f6t:'Vignette', f6d:'Vignette with adjustable intensity and size for atmospheric image edges.',
-            f7t:'Live Histogram', f7d:'Real-time histogram for all color channels — precise exposure control at a glance.',
-            f8t:'EXIF & Image Search', f8d:'EXIF data displayed directly: camera, lens, exposure time, ISO. Search images via metadata.',
-            f9t:'Flexible Export', f9d:'Save as JPEG, PNG or TIFF — with adjustable quality, sharpening and color profile (sRGB / AdobeRGB).',
-            f10t:'Split-Toning', f10d:'Color highlights and shadows independently — for creative color moods and film looks.',
-            f11t:'Black & White Conversion', f11d:'Controllable B&W mode with adjustable channel weights for red, green and blue.',
-            f12t:'Crop & Rotate', f12d:'Interactive cropping with free aspect ratio and rotation — includes rule-of-thirds grid.',
-            f13t:'Lens Correction', f13d:'Automatic profile-based correction for distortion and vignetting via built-in Lensfun database.',
-            f14t:'Brush Masks', f14d:'Local corrections with freely painted masks — edit only the areas you want.',
-            f15t:'Saturation & Vibrance', f15d:'Separate controls for saturation and vibrance, plus individual boost for green and blue tones.',
-            dev_note:'<strong>Actively in development:</strong> chromaFX is still being built. Some features — e.g. the gradient filter — are implemented but not yet fully stable. The program is continuously being improved. Mac support is planned.',
-            r_label:'Development Status', r_title:'What\'s done.<br>What\'s next.', r_sub:'An honest overview — what works, what\'s in progress and what\'s planned.',
+            f_label:'Features', f_title:'Full control over every image.', f_sub:'Professional photo editing tools.',
+            f1t:'Open RAW Formats', f1d:'Direct support for RAW files.',
+            f2t:'Tone Curves', f2d:'Precise RGB curve editor.',
+            f3t:'Smart Noise Reduction', f3d:'Edge-aware noise reduction.',
+            f4t:'Albums & Gallery', f4d:'Organize with color labels.',
+            f5t:'Before/After Comparison', f5d:'Compare side by side.',
+            f6t:'Vignette', f6d:'Adjustable intensity and size.',
+            f7t:'Live Histogram', f7d:'Real-time exposure control.',
+            f8t:'EXIF & Image Search', f8d:'Search via metadata.',
+            f9t:'Flexible Export', f9d:'Save as JPEG, PNG, TIFF.',
+            f10t:'Split-Toning', f10d:'Color highlights and shadows.',
+            f11t:'Black & White', f11d:'Controllable B&W conversion.',
+            f12t:'Crop & Rotate', f12d:'Interactive grid cropping.',
+            f13t:'Lens Correction', f13d:'Profiles via Lensfun database.',
+            f14t:'Brush Masks', f14d:'Local painted corrections.',
+            f15t:'Saturation & Vibrance', f15d:'Independent color controls.',
+            dev_note:'<strong>Under Development:</strong> Some features are still being stabilized.',
+            r_label:'Dev Status', r_title:'What\'s done. What\'s next.', r_sub:'An honest overview.',
             st_done:'Done', st_done2:'Done', st_done3:'Done', st_done4:'Done', st_done5:'Done', st_done6:'Done', st_done7:'Done', st_done8:'Done', st_done9:'Done', st_done10:'Done',
             st_wip:'In Progress', st_plan:'Planned',
-            r1l:'RAW Opening & Basic Editing', r1d:'Brightness, contrast, white point, black point, highlights, shadows',
-            r2l:'Tone Curves & Live Histogram', r2d:'Interactive curve editor with separate RGB channels',
-            r3l:'Albums, Search & Color Labels', r3d:'Gallery management with ratings and metadata search',
-            r4l:'Noise Reduction & Sharpening', r4d:'Edge-aware noise reduction and unsharp mask sharpening',
-            r5l:'Split-Toning & B&W Conversion', r5d:'Highlight/shadow toning and adjustable black-and-white mode',
-            r6l:'Crop & Rotate', r6d:'Free crop with rule-of-thirds grid and free rotation',
-            r7l:'Lens Correction Profiles', r7d:'Automatic correction via Lensfun database',
-            r8l:'Brush Masks', r8d:'Local corrections with freely painted masks',
-            r9l:'Export with Color Profile', r9d:'JPEG / PNG / TIFF with sRGB or AdobeRGB, sharpening on export',
-            r10l:'Performance & Stability', r10d:'Fast load times, memory management, error handling',
-            r11l:'Gradient Filter', r11d:'Directional exposure adjustment — implemented, not yet fully stable',
-            r12l:'Mac Support', r12d:'macOS compatibility is in planning',
-            sp1k:'Operating System', sp1v:'Windows / Linux', sp2k:'RAM', sp2r:'/ Rec. 8 GB+', sp3k:'Processor',
+            r1l:'RAW Opening', r1d:'Exposure, contrast, etc.',
+            r2l:'Tone Curves', r2d:'Interactive curve editor.',
+            r3l:'Albums & Labels', r3d:'Gallery management.',
+            r4l:'Noise Reduction', r4d:'Detail preservation.',
+            r5l:'Split-Toning', r5d:'Creative moods.',
+            r6l:'Crop & Rotate', r6d:'Thirds grid rotation.',
+            r7l:'Lens Correction', r7d:'Lensfun profiles.',
+            r8l:'Brush Masks', r8d:'Local corrections.',
+            r9l:'Export', r9d:'sRGB/AdobeRGB output.',
+            r10l:'Performance', r10d:'Stability & speed.',
+            r11l:'Gradient Filter', r11d:'Directional edits.',
+            r12l:'Mac Support', r12d:'macOS planning.',
+            sp1k:'OS', sp1v:'Windows / Linux', sp2k:'RAM', sp2r:'/ Rec. 8 GB+', sp3k:'Processor',
             sp4k:'License', sp4v:'Freeware', sp5k:'Color Depth', sp6k:'Status', sp6v:'In Development',
-            ct_label:'Contact', ct_title:'Feedback<br>is welcome.',
-            ct_sub:"chromaFX is a solo project. If you find bugs, have ideas or just want to say hello — feel free to reach out.",
-            ct_dev:'Developer', ct_loc:'Location', ct_mail:'E-Mail', ct_proj:'Project', ct_lic:'License', ct_licv:'Freeware',
-            f_rights:'All rights reserved.', f_note:'Freeware · No download during development phase.'
+            ct_label:'Contact', ct_title:'Feedback is welcome.',
+            ct_sub:'chromaFX is a solo project.',
+            ct_dev:'Developer', ct_mail:'E-Mail', ct_loc:'Location', ct_locv:'Germany', ct_wa_label:'Community', ct_wa_val:'Join WhatsApp Channel',
+            ct_proj:'Project', ct_lic:'License', ct_licv:'Freeware',
+            f_rights:'All rights reserved.', f_note:'Freeware · No download during development.'
         }
     };
 
-    let lang = 'de';
     function setLang(l) {
-        lang = l;
         document.getElementById('lang-de').classList.toggle('active', l === 'de');
         document.getElementById('lang-en').classList.toggle('active', l === 'en');
         document.querySelectorAll('[data-i18n]').forEach(el => {
-            const k = el.getAttribute('data-i18n');
-            if (T[l][k] !== undefined) el.innerHTML = T[l][k];
+            const k = el.getAttribute('data-i18n'); if (T[l][k]) el.innerHTML = T[l][k];
         });
     }
 </script>
