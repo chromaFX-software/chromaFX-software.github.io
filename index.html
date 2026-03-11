@@ -120,8 +120,14 @@
             text-decoration: none;
             z-index: 501;
             white-space: nowrap;
+            display: flex;
+            align-items: center;
         }
-        .logo .fx { color: var(--accent); }
+        .logo img {
+            height: auto;
+            max-height: 45px; /* LOGO-GRÖSSE NAVIGATION: Hier anpassen (vorher 30px) */
+            display: block;
+        }
 
         .dev-badge {
             font-family: var(--mono);
@@ -444,8 +450,12 @@
             padding: 3.5rem 5%; border-top: 1px solid var(--border);
             display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 2rem;
         }
-        .footer-logo { font-weight: 800; font-size: 1.05rem; letter-spacing: -0.03em; }
-        .footer-logo .fx { color: var(--accent); }
+        .footer-logo { display: flex; align-items: center; font-weight: 800; font-size: 1.05rem; letter-spacing: -0.03em; }
+        .footer-logo img {
+            height: auto;
+            max-height: 35px; /* LOGO-GRÖSSE FOOTER: Hier anpassen (vorher 24px) */
+            display: block;
+        }
         .footer-r { font-family: var(--mono); font-size: 0.72rem; color: var(--muted); text-align: right; line-height: 1.9; }
 
         .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.75s var(--ease), transform 0.75s var(--ease); }
@@ -465,7 +475,9 @@
             
             nav { padding: 0.8rem 5%; }
             .nav-left { gap: 0.7rem; }
-            .logo { font-size: 1.1rem; }
+            
+            .logo img { max-height: 35px; } /* LOGO-GRÖSSE HANDY: Hier anpassen (vorher 26px) */
+            
             .dev-badge { display: none; } /* Versteckt Badge auf kleinen Handys für Platz */
             
             .feat-grid { grid-template-columns: 1fr; gap: 1px; }
@@ -483,7 +495,6 @@
         
         /* FALLBACK FÜR SEHR KLEINE BILDSCHIRME */
         @media (max-width: 360px) {
-            .logo { font-size: 1rem; }
             .lang-switch { font-size: 0.7rem; }
         }
     </style>
@@ -513,7 +524,9 @@
         <button class="hamburger" onclick="toggleMenu()" aria-label="Menü">
             <span></span><span></span><span></span>
         </button>
-        <a href="#" class="logo" onclick="switchView('home')">chroma<span class="fx">FX</span></a>
+        <a href="#" class="logo" onclick="switchView('home')">
+            <img src="chromaFX.png" alt="chromaFX Logo">
+        </a>
     </div>
     <div class="nav-right">
         <div class="lang-switch">
@@ -702,7 +715,9 @@
 
 <!-- FOOTER -->
 <footer>
-    <div class="footer-logo">chroma<span class="fx">FX</span></div>
+    <div class="footer-logo">
+        <img src="chromaFX.png" alt="chromaFX Logo">
+    </div>
     <div class="footer-r">
         <div>© 2026 Dominik Schrödel. <span data-i18n="f_rights">Alle Rechte vorbehalten.</span></div>
         <div data-i18n="f_note">Freeware · Kein Download in der Entwicklungsphase.</div>
